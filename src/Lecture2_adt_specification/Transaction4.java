@@ -1,47 +1,74 @@
 package Lecture2_adt_specification;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Calendar;
-//import java.util.Date;
 
 /**
- * In Addition to the Design considerations in Transaction4 class:
- * This class adds Specifications defining the Requires and Produces interfaces
+ * Transaction4 ADT Specification:
+ *
+ * An Abstract Data Type (ADT) for representing financial transactions, characterized by:
+ * - An integer `amount`, representing the transaction amount.
+ * - A `Calendar` object `date`, representing the transaction date.
+ *
+ * Design Considerations:
+ * - The `amount` field is immutable.
+ * - The `date` field is defensively copied to prevent external modification.
  */
-
 public class Transaction4 {
-    private final int amount;
-    private final Calendar date;
+    private final int amount; // The amount involved in the transaction
+    private final Calendar date; // The date when the transaction occurred
 
     /**
-     * Lecture1_adt.TransactionInterface Constructor
-     * @param amount in an integer
-     * @param date: Not null, and must be a Calendar object
-     * @return void
-     * Instialises the field, attributes of a transaction
-     * Creates a object of this
+     * Constructor Specification:
+     *
+     * Requires:
+     * - `amount` must be a valid integer (positive, negative, or zero).
+     * - `date` must not be null and must be a valid Calendar object.
+     *
+     * Produces:
+     * - A new Transaction4 instance initialized with the specified `amount` and `date`.
+     * - The `date` field is stored as a defensive copy to ensure immutability.
+     *
+     * @param amount Transaction amount as an integer.
+     * @param date   A Calendar object representing the transaction date (not null).
      */
     public Transaction4(int amount, @NotNull Calendar date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date cannot be null");
+        }
         this.amount = amount;
         this.date = (Calendar) date.clone();
     }
 
-
     /**
-     * getAmount()
-     * @return integer
+     * Accessor Method: getAmount()
+     *
+     * Requires:
+     * - No preconditions.
+     *
+     * Produces:
+     * - Returns the transaction amount as an integer.
+     * - The returned value is immutable.
+     *
+     * @return The amount of the transaction.
      */
     public int getAmount() {
-        return amount; // Because we are dealing with Value types we need not worry about what we return
+        return amount; // Immutable primitive value, safe to return directly
     }
 
     /**
-     * getDate()
-     * @return Calendar Object
+     * Accessor Method: getDate()
+     *
+     * Requires:
+     * - No preconditions.
+     *
+     * Produces:
+     * - Returns a defensive copy of the transaction date.
+     * - The returned object is a new Calendar instance to prevent external modification.
+     *
+     * @return A Calendar object representing the transaction date.
      */
     public Calendar getDate() {
-//        return date;    // Because we are dealing with Reference types we need to judiciously copy what our getters return
-        return (Calendar) date.clone(); // Defensive copying or Judicious Copying
+        return (Calendar) date.clone(); // Defensive copy ensures immutability
     }
 }

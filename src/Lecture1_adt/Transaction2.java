@@ -26,7 +26,7 @@ public class Transaction2 {
     }
 
     public int getAmount() {
-        return amount; // Because we are dealing with Value types we need not worry about what we return
+        return amount; //  we need not worry about what we return
     }
 
     public Calendar getDate() {
